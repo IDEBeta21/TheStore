@@ -9,6 +9,9 @@ class StoreTypes(models.Model):
     class Meta:
         db_table = "store_types"
 
+    def __str__(self):
+        return (f"ID: {self.id} Type: {self.name}")
+
 class Stores(models.Model):
     external_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, auto_created=True)
     name = models.CharField(max_length=100)
