@@ -1,5 +1,6 @@
 import uuid
 from django.db import models
+from django.utils import timezone
 
 # Create your models here.
 class StoreTypes(models.Model):
@@ -45,7 +46,32 @@ class Products(models.Model):
 
     class Meta:
         db_table = "products"
-    
 
+class Users(models.Model):
+    external_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, auto_created=True)
+    name = models.CharField(max_length=255)
+    username = models.CharField(max_length=100)
+    password = models.BinaryField()
+    password_salt = models.BinaryField()
+    gender = models.CharField(max_length=1, null=True)
+    birthdate = models.DateField()
+    address = models.CharField(max_length=255)
+    email = models.CharField(max_length=255)
+    mobile_no = models.CharField(11)
+    is_acc_deleted = models.BooleanField()
+    created_at = models.DateTimeField()
 
+    class Meta:
+        db_table = "users"
     
+class Orders(models.Model):
+    external_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, auto_created=True)
+    product_id = models.ForeignKey(Products, on_delete=models.CASCADE, related_name="orders_products")
+    user_id = models.ForeignKey(Users, on_delete=models.CASCADE, related_name="orders_users")
+    transaction_done = models.BooleanField()
+    created_at = models.DateField(default=timezone.now)
+    updated_at = models.DateField(null=True)
+    updated_by = models.CharField(max_length=255)
+
+    class Meta:
+        db_table = "orders"    
