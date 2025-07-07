@@ -8,6 +8,8 @@ class StoreTypes(models.Model):
 
     class Meta:
         db_table = "store_types"
+        verbose_name = "Store Type"
+        verbose_name_plural = "Store Types"
 
     def __str__(self):
         return (f"ID: {self.id} Type: {self.name}")
@@ -31,6 +33,11 @@ class ProductTypes(models.Model):
 
     class Meta:
         db_table = "product_types"
+        verbose_name = "Product Type"
+        verbose_name_plural = "Product Types"
+
+    def __str__ (self):
+        return (f'ID: {self.id} Type: {self.name}')
 
 class Products(models.Model):
     external_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, auto_created=True)
