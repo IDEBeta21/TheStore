@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -83,10 +84,10 @@ WSGI_APPLICATION = 'ecommerce.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'ecom-db',
-        'USER': 'admin',
-        'PASSWORD': 'adminpassword',
-        'HOST': 'localhost',
+        'NAME': os.getenv('DB_NAME', 'ecom-db'),
+        'USER': os.getenv('DB_USER', 'admin'),
+        'PASSWORD': os.getenv('DB_PASSWORD', 'adminpassword'),
+        'HOST': os.getenv('DB_HOST', 'localhost'),
         'PORT': '5436',
     }
 }
