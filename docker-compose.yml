@@ -15,9 +15,28 @@ services:
       POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
       PGPORT: ${DATABASE_PORT}
     ports:
-      - '${DATABASE_PORT}:${DATABASE_PORT}'
+      - '${DATABASE_PORT}:${DATABASE_PORT}' #extrnl:intrnl
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    networks:
+      - project-ecom-local
+
+  # Django server
+  project-ecom-admin:
+    build:
+      context: ./apps/db/ecomadmin/ecommerce
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./apps/db/ecomadmin/ecommerce:/code
+    ports:
+      - "8000:8000"
+    depends_on:
+      - project-ecom-db
+    environment:
+      - DB_NAME=${DATABASE_NAME}
+      - DB_USER=${DATABASE_USERNAME}
+      - DB_PASSWORD=${DATABASE_PASSWORD}
+      - DB_HOST=${DOCKERIZED_DATABASE_HOST}
     networks:
       - project-ecom-local
 
