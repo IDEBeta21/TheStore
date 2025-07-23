@@ -4,7 +4,7 @@ networks:
     driver: bridge
 
 services:
-  # Postgres database image
+  # Postgres database container
   project-ecom-db:
     image: postgres:latest
     container_name: ecom-db
@@ -13,19 +13,20 @@ services:
       POSTGRES_DB: ${DATABASE_NAME}
       POSTGRES_USER: ${DATABASE_USERNAME}
       POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
-      PGPORT: ${DATABASE_PORT}
+      # PGPORT: ${DATABASE_PORT}
     ports:
-      - '${DATABASE_PORT}:${DATABASE_PORT}' #extrnl:intrnl
+      - '${DATABASE_EXTERNAL_PORT}:${DATABASE_PORT}' #extrnl:intrnl
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
       - project-ecom-local
 
-  # Django server
+  # Django server container
   project-ecom-admin:
     build:
       context: ./apps/db/ecomadmin/ecommerce
     command: python manage.py runserver 0.0.0.0:8000
+    container_name: project-ecom-admin
     volumes:
       - ./apps/db/ecomadmin/ecommerce:/code
     ports:
@@ -33,12 +34,12 @@ services:
     depends_on:
       - project-ecom-db
     environment:
-      - DB_NAME=${DATABASE_NAME}
-      - DB_USER=${DATABASE_USERNAME}
-      - DB_PASSWORD=${DATABASE_PASSWORD}
-      - DB_HOST=${DOCKERIZED_DATABASE_HOST}
+      - DATABASE_NAME=${DATABASE_NAME}
+      - DATABASE_USERNAME=${DATABASE_USERNAME}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+      - DATABASE_HOST=${DATABASE_HOST}
+      - DATABASE_PORT=${DATABASE_PORT}
     networks:
       - project-ecom-local
-
 volumes:
   postgres_data:

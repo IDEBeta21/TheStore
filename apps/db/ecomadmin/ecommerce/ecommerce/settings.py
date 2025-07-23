@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 import os
 from pathlib import Path
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,7 +27,7 @@ SECRET_KEY = 'django-insecure-tk$a@*d%lxxmm1-8cuorr*+czv#fw^*0sv6_*#*^h6lh7x=!@g
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['0.0.0.0', 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -81,14 +82,21 @@ WSGI_APPLICATION = 'ecommerce.wsgi.application'
 #     }
 # }
 
+# Load .env file
+BASE_DIR = Path(__file__).resolve().parent.parent
+load_dotenv(BASE_DIR / '.env')
+
+# Now use os.getenv
+# DEBUG = os.getenv('DEBUG', 'False') == 'True'
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('DB_NAME', 'ecom-db'),
-        'USER': os.getenv('DB_USER', 'admin'),
-        'PASSWORD': os.getenv('DB_PASSWORD', 'adminpassword'),
-        'HOST': os.getenv('DB_HOST', 'localhost'),
-        'PORT': '5436',
+        'NAME': os.getenv('DATABASE_NAME', 'ecom-db'),
+        'USER': os.getenv('DATABASE_USERNAME', 'admin'),
+        'PASSWORD': os.getenv('DATABASE_PASSWORD', 'adminpassword'),
+        'HOST': os.getenv('DATABASE_HOST', 'localhost'),
+        'PORT': os.getenv('DATABASE_PORT', '5432'), #(5436) same as the external port
     }
 }
 
