@@ -7,7 +7,7 @@ services:
   # Postgres database container
   project-ecom-db:
     image: postgres:latest
-    container_name: ecom-db
+    container_name: store-db
     restart: always
     environment:
       POSTGRES_DB: ${DATABASE_NAME}
@@ -26,7 +26,7 @@ services:
     build:
       context: ./apps/db/ecomadmin/ecommerce
     command: python manage.py runserver 0.0.0.0:8000
-    container_name: project-ecom-admin
+    container_name: store-db-admin
     volumes:
       - ./apps/db/ecomadmin/ecommerce:/code
     ports:

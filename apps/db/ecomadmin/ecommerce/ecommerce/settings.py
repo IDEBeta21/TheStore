@@ -92,7 +92,7 @@ load_dotenv(BASE_DIR / '.env')
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('DATABASE_NAME', 'ecom-db'),
+        'NAME': os.getenv('DATABASE_NAME', 'store-db'),
         'USER': os.getenv('DATABASE_USERNAME', 'admin'),
         'PASSWORD': os.getenv('DATABASE_PASSWORD', 'adminpassword'),
         'HOST': os.getenv('DATABASE_HOST', 'localhost'),
