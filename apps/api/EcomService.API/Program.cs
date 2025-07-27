@@ -22,6 +22,6 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-Console.WriteLine("Please access http://localhost:5000/swagger");
+Console.WriteLine("\n\nPlease access http://localhost:5000/swagger\n\n");
 
 app.Run();

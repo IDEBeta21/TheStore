@@ -3,15 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 namespace EcomService.API.ProductController
 {
     [ApiController]
-    [Route("api/products")]
+    [Route("api/[controller]")]
     public class ProductController : ControllerBase
     {
-        // GET: ProductController
-        // public IActionResult Index()
-        // {
-        //     return Ok();
-        // }
-
         [HttpGet("test")]
         public IActionResult Test()
         {
