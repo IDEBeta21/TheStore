@@ -20,7 +20,7 @@ class Stores(AuditHelper):
     name = models.CharField(max_length=100)
     description = models.CharField(max_length=100)
     store_types = models.ForeignKey(StoreTypes, on_delete=models.CASCADE, related_name="stores_store_types", db_column="store_type_id")
-    is_deleted = models.BooleanField
+    is_deleted = models.BooleanField(default=False)
     class Meta:
         db_table = "stores"
 
@@ -43,8 +43,8 @@ class Products(AuditHelper):
     description = models.CharField(max_length=100)
     product_type = models.ForeignKey(ProductTypes, on_delete=models.CASCADE, related_name="products_product_types", db_column="product_type_id")
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    is_available = models.BooleanField
-    is_deleted = models.BooleanField
+    is_available = models.BooleanField(default=True)
+    is_deleted = models.BooleanField(default=False)
 
     class Meta:
         db_table = "products"
@@ -60,7 +60,7 @@ class Users(AuditHelper):
     address = models.CharField(max_length=255)
     email = models.CharField(max_length=255)
     mobile_no = models.CharField(11)
-    is_acc_deleted = models.BooleanField()
+    is_acc_deleted = models.BooleanField(default=False)
 
     class Meta:
         db_table = "users"
@@ -69,7 +69,7 @@ class Orders(AuditHelper):
     external_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, auto_created=True)
     product_id = models.ForeignKey(Products, on_delete=models.CASCADE, related_name="orders_products", db_column="product_id")
     user_id = models.ForeignKey(Users, on_delete=models.CASCADE, related_name="orders_users", db_column="user_id")
-    transaction_done = models.BooleanField()
+    transaction_done = models.BooleanField(default=False)
 
     class Meta:
         db_table = "orders"    
