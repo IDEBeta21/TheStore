@@ -1,3 +1,5 @@
+using EcomService.API.Models.Dto;
+using EcomService.API.Services.StoreServices;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MyApp.Namespace
@@ -6,10 +8,17 @@ namespace MyApp.Namespace
     [Route("api/[controller]")]
     public class StoreController : ControllerBase
     {
-        [HttpGet("test")]
-        public IActionResult Index()
+        private readonly IStoreService _storeService;
+        public StoreController(IStoreService storeService)
         {
-            return Ok("Hello Store");
+            _storeService = storeService;
+        }
+        [HttpGet("get-all-store-types")]
+        public async Task<IActionResult> GetAllStoreTypes()
+        {
+            ServiceResponse<List<string>> value = await _storeService.GetAllStoreType();
+            if (value.success == false) return BadRequest(value); 
+            return Ok(value);
         }
 
     }

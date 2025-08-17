@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 namespace EcomService.API.Models.Dto.Product
 {
-    public class GetProductDto
+    public class GetProductReponseDto
     {
-        
+        public string name { get; set; } = string.Empty;
     }
 }
